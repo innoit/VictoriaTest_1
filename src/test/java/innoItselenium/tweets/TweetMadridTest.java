@@ -7,6 +7,7 @@ import pageobjects.MunimadridHome;
 import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -23,12 +24,13 @@ public WebDriver driver;
 	}
 	
 	@Test
-	public void searchMadridTweets() {
-		MunimadridHome tweetLookup = new MunimadridHome(driver);
-//		WebElement element =  driver.findElement(By.id("twitter-widget-0"));
-//		boolean b = driver.switchTo().frame(element).findElement(By.xpath("//h1[contains(text(), 'Tweets')]")).isDisplayed();
-		
-		Assert.assertTrue(tweetLookup.isFrameDisplayed());
+	public void searchMadridTweets() throws InterruptedException {
+		MunimadridHome elframe = new MunimadridHome(driver);
+		elframe.getIframeContext();
+		WebElement unTweet = elframe.getTweeTag();
+		elframe.waitForTweetag(driver);
+		Assert.assertTrue(unTweet.isDisplayed());
+		//driver.switchTo().defaultContent();
 	}
 	
 	@AfterTest
